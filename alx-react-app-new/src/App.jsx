@@ -10,8 +10,6 @@ import UserProfile from './components/UserProfile.jsx'
 import Counter from './components/Counter.jsx'
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <>
       <div>
@@ -24,9 +22,6 @@ function App() {
       </div>
       <h1>Vite + React</h1>
       <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
         <p>
           Edit <code>src/App.jsx</code> and save to test HMR
         </p>
@@ -40,7 +35,6 @@ function App() {
       <Header />
       <MainContent />
       <Footer />
-
       <UserProfile name="Alice" age="25" bio="Loves hiking and photography" />
     </>
     
