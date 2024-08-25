@@ -23,10 +23,10 @@ function Navbar() {
       {/* Each Link component creates a clickable link to a different page in our app. */}
       {/* The 'to' prop specifies the route to navigate to when the link is clicked. */}
       {/* We're using inline styling for each link as well. */}
-      <Link to="/" style={{ color: 'white', textDecoration: 'none' }}>Home</Link>
-      <Link to="/about" style={{ color: 'white', textDecoration: 'none' }}>About</Link>
-      <Link to="/services" style={{ color: 'white', textDecoration: 'none' }}>Services</Link>
-      <Link to="/contact" style={{ color: 'white', textDecoration: 'none' }}>Contact</Link>
+      <Link to="/" style={{ color: 'white', backgroundColor: 'black' , textDecoration: 'none' }}>Home</Link>
+      <Link to="/about" style={{ color: 'white', backgroundColor: 'black', textDecoration: 'none' }}>About</Link>
+      <Link to="/services" style={{ color: 'white', backgroundColor: 'black', textDecoration: 'none' }}>Services</Link>
+      <Link to="/contact" style={{ color: 'white', backgroundColor: 'black', textDecoration: 'none' }}>Contact</Link>
     </nav>
   );
 }
