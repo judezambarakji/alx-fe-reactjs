@@ -7,10 +7,13 @@ import { useRecipeStore } from "./recipeStore";
 
 // Define the RecipeList component as a function
 const RecipeList = () => {
-  // Use the useRecipeStore hook to get the filtered recipes and search term from our store
+  // Use the useRecipeStore hook to get the filtered recipes, search term, and other functions from our store
   const filteredRecipes = useRecipeStore((state) => state.filteredRecipes);
   const searchTerm = useRecipeStore((state) => state.searchTerm);
   const filterRecipes = useRecipeStore((state) => state.filterRecipes);
+  const favorites = useRecipeStore((state) => state.favorites);
+  const addFavorite = useRecipeStore((state) => state.addFavorite);
+  const removeFavorite = useRecipeStore((state) => state.removeFavorite);
 
   // Use the useEffect hook to filter recipes when the component mounts or when the search term changes
   useEffect(() => {
@@ -35,6 +38,18 @@ const RecipeList = () => {
           </Link>
           {/* Display the recipe description in a p tag */}
           <p>{recipe.description}</p>
+          {/* Add a button to toggle favorite status */}
+          <button
+            onClick={() =>
+              favorites.includes(recipe.id)
+                ? removeFavorite(recipe.id)
+                : addFavorite(recipe.id)
+            }
+          >
+            {favorites.includes(recipe.id)
+              ? "Remove from Favorites"
+              : "Add to Favorites"}
+          </button>
         </div>
       ))}
     </div>

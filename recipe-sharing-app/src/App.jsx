@@ -14,6 +14,12 @@ import RecipeDetails from "./RecipeDetails";
 // Import the SearchBar component from its file
 import SearchBar from "./SearchBar";
 
+// Import the FavoritesList component from its file
+import FavoritesList from "./FavoritesList";
+
+// Import the RecommendationsList component from its file
+import RecommendationsList from "./RecommendationsList";
+
 // Define the main App component as a function
 function App() {
   // The component returns JSX, which is a syntax extension for JavaScript
@@ -40,6 +46,10 @@ function App() {
           {/* Route for individual recipe details */}
           {/* The :id in the path is a parameter that will be passed to the component */}
           <Route path="/recipe/:id" element={<RecipeDetails />} />
+          {/* Route for the favorites list */}
+          <Route path="/favorites" element={<FavoritesList />} />
+          {/* Route for the recommendations list */}
+          <Route path="/recommendations" element={<RecommendationsList />} />
         </Routes>
       </div>
     </Router>

@@ -14,6 +14,12 @@ export const useRecipeStore = create((set, get) => ({
   // Initialize an empty array to store the filtered recipes
   filteredRecipes: [],
 
+  // Initialize an empty array to store the user's favorite recipe IDs
+  favorites: [],
+
+  // Initialize an empty array to store recommended recipes
+  recommendations: [],
+
   // Function to add a new recipe to the recipes array
   addRecipe: (newRecipe) =>
     set((state) => ({
@@ -71,4 +77,24 @@ export const useRecipeStore = create((set, get) => ({
     set({ filteredRecipes: filtered });
     return filtered;
   },
+
+  // Function to add a recipe to favorites
+  addFavorite: (recipeId) =>
+    set((state) => ({ favorites: [...state.favorites, recipeId] })),
+
+  // Function to remove a recipe from favorites
+  removeFavorite: (recipeId) =>
+    set((state) => ({
+      favorites: state.favorites.filter((id) => id !== recipeId),
+    })),
+
+  // Function to generate recipe recommendations
+  generateRecommendations: () =>
+    set((state) => {
+      // Mock implementation based on favorites
+      const recommended = state.recipes.filter(
+        (recipe) => !state.favorites.includes(recipe.id) && Math.random() > 0.5
+      );
+      return { recommendations: recommended };
+    }),
 }));
