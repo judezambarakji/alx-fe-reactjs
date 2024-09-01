@@ -11,6 +11,9 @@ import RecipeList from "./RecipeList";
 // Import the RecipeDetails component from its file
 import RecipeDetails from "./RecipeDetails";
 
+// Import the SearchBar component from its file
+import SearchBar from "./SearchBar";
+
 // Define the main App component as a function
 function App() {
   // The component returns JSX, which is a syntax extension for JavaScript
@@ -21,6 +24,10 @@ function App() {
       <div className="App">
         {/* This is the main heading of our application */}
         <h1>Recipe Sharing App</h1>
+
+        {/* Render the SearchBar component */}
+        {/* This component will allow users to search for recipes */}
+        <SearchBar />
 
         {/* Render the AddRecipeForm component */}
         {/* This component will allow users to add new recipes */}
