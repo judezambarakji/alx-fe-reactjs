@@ -3,7 +3,7 @@ function UserProfile() {
   // Return JSX that describes the structure and styling of the component
   return (
     // Main container div with Tailwind CSS classes for responsive styling
-    <div className="user-profile bg-gray-100 p-4 sm:p-6 md:p-8 max-w-xs sm:max-w-sm md:max-w-md mx-auto my-8 sm:my-12 md:my-20 rounded-lg shadow-lg">
+    <div className="user-profile bg-gray-100 p-4 sm:p-4 md:p-8 max-w-xs sm:max-w-sm md:max-w-md mx-auto my-8 sm:my-12 md:my-20 rounded-lg shadow-lg">
       {/* User profile image with responsive sizing */}
       <img
         src="https://via.placeholder.com/150"
