@@ -75,8 +75,18 @@ const AddRecipeForm = ({ onAddRecipe }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="max-w-lg mx-auto mt-8">
-      {/* Form element with onSubmit handler and Tailwind classes for styling */}
+    <form
+      onSubmit={handleSubmit}
+      className="max-w-lg mx-auto mt-8 p-6 bg-white rounded-lg shadow-md"
+    >
+      {/* Form element with onSubmit handler and Tailwind classes for styling
+          - max-w-lg: Set maximum width
+          - mx-auto: Center horizontally
+          - mt-8: Add top margin
+          - p-6: Add padding
+          - bg-white: Set background color to white
+          - rounded-lg: Add rounded corners
+          - shadow-md: Add medium shadow for elevation effect */}
 
       <div className="mb-4">
         <label htmlFor="title" className="block text-gray-700 font-bold mb-2">
