@@ -4,6 +4,9 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 // Import the Link component from react-router-dom for creating navigation links
 
+import AddRecipeForm from "./AddRecipeForm";
+// Import the new AddRecipeForm component
+
 const HomePage = () => {
   // Define the HomePage component as a functional component
 
@@ -40,6 +43,23 @@ const HomePage = () => {
     // Call the fetchRecipes function to initiate the data fetching
   }, []); // The empty array means this effect runs only once, when the component mounts
 
+  const handleAddRecipe = (newRecipe) => {
+    // Function to handle adding a new recipe
+    const updatedRecipes = [
+      ...recipes,
+      {
+        ...newRecipe,
+        id: recipes.length + 1,
+        image: "https://via.placeholder.com/150",
+      },
+    ];
+    // Create a new array with all existing recipes and the new recipe
+    // Add an id and a placeholder image to the new recipe
+
+    setRecipes(updatedRecipes);
+    // Update the recipes state with the new array including the added recipe
+  };
+
   return (
     <div className="container mx-auto px-4 py-8">
       {/* Main container for the HomePage
@@ -54,12 +74,17 @@ const HomePage = () => {
           - bottom margin of 1.5rem (6 in Tailwind)
           - centered text */}
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <AddRecipeForm onAddRecipe={handleAddRecipe} />
+      {/* Render the AddRecipeForm component
+          Pass the handleAddRecipe function as a prop */}
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
         {/* Grid container for recipe cards
             - 1 column on small screens
             - 2 columns on medium screens
             - 3 columns on large screens
-            - Gap of 1.5rem (6 in Tailwind) between grid items */}
+            - Gap of 1.5rem (6 in Tailwind) between grid items
+            - Top margin of 2rem (8 in Tailwind) to separate from the form */}
 
         {recipes.map((recipe) => (
           // Map over the recipes array and create a card for each recipe
