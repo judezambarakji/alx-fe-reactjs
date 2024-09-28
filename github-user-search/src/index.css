@@ -1,3 +1,11 @@
+/* Tailwind CSS directives */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* These three lines import Tailwind's base styles, component classes, and utility classes */
+
+/* Existing styles */
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -66,3 +74,6 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+/* Note: When using Tailwind CSS, you may want to review and potentially remove some of these custom styles 
+   as Tailwind provides utility classes for many common styling needs. */
