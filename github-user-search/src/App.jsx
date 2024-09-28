@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { searchUser } from "./services/apiClient";
+import Search from "./components/Search";
+import axios from "axios";
 import "./App.css";
 
 function App() {
@@ -18,8 +20,6 @@ function App() {
     } catch (err) {
       if (axios.isAxiosError(err)) {
         if (err.response) {
-          // The request was made and the server responded with a status code
-          // that falls out of the range of 2xx
           if (err.response.status === 404) {
             setError(
               "User not found. Please check the username and try again."
@@ -32,12 +32,10 @@ function App() {
             setError(`An error occurred: ${err.response.data.message}`);
           }
         } else if (err.request) {
-          // The request was made but no response was received
           setError(
             "No response received from GitHub. Please check your internet connection."
           );
         } else {
-          // Something happened in setting up the request that triggered an Error
           setError(`An error occurred: ${err.message}`);
         }
       } else {
@@ -49,15 +47,7 @@ function App() {
   return (
     <div className="App">
       <h1>GitHub User Search</h1>
-      <form onSubmit={handleSearch}>
-        <input
-          type="text"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          placeholder="Enter a GitHub username"
-        />
-        <button type="submit">Search</button>
-      </form>
+      <Search onSearch={handleSearch} query={query} setQuery={setQuery} />
       {error && <p className="error">{error}</p>}
       {results && (
         <div className="results">
@@ -74,3 +64,8 @@ function App() {
 }
 
 export default App;
+
+// This updated App.jsx combines the previous error handling and results display
+// with the new Search component. The handleSearch function remains in App.jsx
+// to maintain the existing error handling logic, while the Search component
+// is responsible for rendering the search input and button.
