@@ -1,82 +1,82 @@
 import axios from "axios";
-// This line imports the axios library, which we use to make HTTP requests to the GitHub API.
 
-const githubApi = axios.create({
-  // This creates a custom instance of axios with specific configurations for our GitHub API requests.
-
-  baseURL: "https://api.github.com",
-  // This sets the base URL for all requests made with this axios instance.
-  // All relative URLs used with this instance will be appended to this base URL.
-
-  headers: {
-    // This object sets default headers for all requests made with this instance.
-
-    "Content-Type": "application/json",
-    // This header tells the server that we're sending JSON data in our requests.
-
-    Authorization: `token ${process.env.REACT_APP_GITHUB_API_KEY}`,
-    // This header includes the GitHub API key for authentication.
-    // The key is stored in an environment variable for security.
-  },
-});
-
+// Function to search for GitHub users using the full URL
 export const searchUsers = async (query, location, minRepos, page = 1) => {
-  // This function performs the user search. It's async because it makes an API call.
-  // It takes query, location, and minRepos as search parameters, and a page number for pagination.
-  // The page parameter has a default value of 1 if not provided.
-
   try {
-    // This try-catch block handles potential errors in the API call.
-
+    // Construct the search query string
     let searchQuery = query;
-    // Start building the search query string with the main query.
-
     if (location) {
-      searchQuery += ` location:${location}`;
+      searchQuery += `+location:${location}`;
     }
-    // If a location is provided, add it to the search query.
-
     if (minRepos) {
-      searchQuery += ` repos:>=${minRepos}`;
+      searchQuery += `+repos:>=${minRepos}`;
     }
-    // If a minimum number of repositories is specified, add it to the search query.
 
-    const response = await githubApi.get("/search/users", {
-      // Make a GET request to the GitHub search API.
+    // Construct the full URL with query parameters
+    const fullUrl = `https://api.github.com/search/users?q=${encodeURIComponent(
+      searchQuery
+    )}&per_page=10&page=${page}`;
 
-      params: {
-        // These are the query parameters for the API request.
-
-        q: searchQuery,
-        // The full search query string we built.
-
-        per_page: 10,
-        // Number of results to return per page.
-
-        page: page,
-        // The page number of results to return.
+    // Make a GET request to the GitHub search API using the full URL
+    const response = await axios.get(fullUrl, {
+      headers: {
+        Authorization: `token ${process.env.REACT_APP_GITHUB_API_KEY}`,
+        Accept: "application/vnd.github.v3+json",
       },
     });
 
     return response.data;
-    // If the request is successful, return the data from the response.
   } catch (error) {
-    // If an error occurs during the API call, this code will run.
-
+    // Error handling
     if (error.response) {
-      // This means the request was made and the server responded with a status code
-      // that falls out of the range of 2xx (successful responses).
       throw new Error(
         error.response.data.message || "Error occurred while searching users"
       );
     } else if (error.request) {
-      // This means the request was made but no response was received.
       throw new Error(
         "No response received from GitHub. Please check your internet connection."
       );
     } else {
-      // This means something happened in setting up the request that triggered an Error.
       throw new Error("Error occurred while setting up the request");
     }
   }
 };
+
+// Detailed explanations:
+
+// import axios from 'axios';
+// This imports the axios library for making HTTP requests.
+
+// export const searchUsers = async (query, location, minRepos, page = 1) => { ... }
+// This function performs the user search. It takes several parameters:
+// - query: The main search term
+// - location: Optional location filter
+// - minRepos: Optional minimum number of repositories filter
+// - page: The page number of results (default is 1)
+
+// let searchQuery = query;
+// This starts building the search query string with the main query.
+
+// if (location) { searchQuery += `+location:${location}`; }
+// if (minRepos) { searchQuery += `+repos:>=${minRepos}`; }
+// These lines add location and minimum repositories filters to the query if provided.
+// Note the use of '+' instead of spaces to separate query parts.
+
+// const fullUrl = `https://api.github.com/search/users?q=${encodeURIComponent(searchQuery)}&per_page=10&page=${page}`;
+// This constructs the full URL for the API call, including:
+// - The base URL and endpoint: https://api.github.com/search/users
+// - The search query: ?q=${encodeURIComponent(searchQuery)}
+// - Additional parameters: &per_page=10&page=${page}
+// encodeURIComponent() is used to properly encode the search query for use in a URL.
+
+// const response = await axios.get(fullUrl, { ... });
+// This makes a GET request to the GitHub search API using the full URL.
+// The second argument is an options object that includes headers:
+// - 'Authorization': Includes the GitHub API key for authentication
+// - 'Accept': Specifies the GitHub API version we want to use
+
+// return response.data;
+// If the request is successful, this returns the data from the response.
+
+// The catch block handles different types of errors that might occur during the API request.
+// It provides specific error messages for different scenarios.
