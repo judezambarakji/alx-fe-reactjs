@@ -3,35 +3,41 @@ import React, { useState } from "react";
 // React is the core library for building user interfaces in React.
 // useState is a hook that allows us to add state to functional components.
 
-import { searchUsers } from "../services/githubService";
-// This line imports the searchUsers function from our custom githubService.
+import { fetchUserData } from "../services/githubService";
+// This imports the fetchUserData function from our githubService file.
 // This function will be used to make API calls to GitHub for searching users.
 
 function Search() {
   // This defines our Search component as a functional component.
 
   const [query, setQuery] = useState("");
-  // This line creates a state variable 'query' and a function to update it 'setQuery'.
+  // This creates a state variable 'query' and a function to update it 'setQuery'.
   // 'query' will store the main search term entered by the user.
   // The initial value of 'query' is an empty string.
 
   const [location, setLocation] = useState("");
   // Similar to above, this creates a state for the location search term.
+  // 'location' will store the location filter entered by the user.
 
   const [minRepos, setMinRepos] = useState("");
   // This creates a state for the minimum number of repositories filter.
+  // 'minRepos' will store the minimum repository count entered by the user.
 
   const [results, setResults] = useState(null);
   // This state will store the search results returned from the GitHub API.
+  // Initially, it's set to null, indicating no search has been performed yet.
 
   const [error, setError] = useState(null);
   // This state will store any error messages that occur during the search process.
+  // Initially, it's set to null, indicating no errors.
 
   const [isLoading, setIsLoading] = useState(false);
   // This state tracks whether a search is currently in progress.
+  // It's used to show/hide a loading indicator.
 
   const [page, setPage] = useState(1);
   // This state keeps track of the current page of results for pagination.
+  // It starts at 1 for the first page of results.
 
   const handleSearch = async (e) => {
     // This function is called when the search form is submitted.
@@ -55,16 +61,16 @@ function Search() {
     try {
       // This try-catch block handles potential errors in the API call.
 
-      const searchResults = await searchUsers(query, location, minRepos, 1);
-      // Call the searchUsers function with our search parameters.
+      const userData = await fetchUserData(query, location, minRepos, 1);
+      // Call the fetchUserData function with our search parameters.
       // The 'await' keyword means we'll wait for this to complete before moving on.
 
-      setResults(searchResults);
+      setResults(userData);
       // Store the returned search results in our state.
     } catch (err) {
       // If an error occurs during the search, this code will run.
 
-      setError("Looks like we cant find any users matching your criteria");
+      setError("Looks like we cant find the user");
       // Set an error message to display to the user.
     } finally {
       // This code will run whether the try block succeeds or fails.
@@ -84,19 +90,14 @@ function Search() {
       const nextPage = page + 1;
       // Calculate the next page number.
 
-      const moreResults = await searchUsers(
-        query,
-        location,
-        minRepos,
-        nextPage
-      );
+      const moreData = await fetchUserData(query, location, minRepos, nextPage);
       // Fetch the next page of results using the same search criteria.
 
       setResults((prevResults) => ({
         // Update the results state. We use a function here to safely update based on the previous state.
-        ...moreResults,
+        ...moreData,
         // Spread the new results into our state.
-        items: [...prevResults.items, ...moreResults.items],
+        items: [...prevResults.items, ...moreData.items],
         // Concatenate the new items with the existing items.
       }));
 
