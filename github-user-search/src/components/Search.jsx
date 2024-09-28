@@ -17,7 +17,7 @@ function Search() {
       const userData = await fetchUserData(query);
       setResults(userData);
     } catch (err) {
-      setError("Looks like we can't find the user");
+      setError("Looks like we cant find the user"); // Specific error message
     } finally {
       setIsLoading(false);
     }
@@ -55,28 +55,22 @@ export default Search;
 // Detailed explanations:
 
 // import React, { useState } from "react";
-// This line imports React and the useState hook. useState is now explicitly imported to manage local state within this component.
+// This line imports React and the useState hook for managing component state.
 
 // import { fetchUserData } from "../services/githubService";
 // This imports the fetchUserData function from our githubService to make API calls.
 
 // const [query, setQuery] = useState("");
-// This creates a state variable 'query' to store the search input, and a function 'setQuery' to update it.
-
 // const [results, setResults] = useState(null);
-// This creates a state variable 'results' to store the search results, and a function 'setResults' to update it.
-
 // const [error, setError] = useState(null);
-// This creates a state variable 'error' to store any error messages, and a function 'setError' to update it.
-
 // const [isLoading, setIsLoading] = useState(false);
-// This creates a state variable 'isLoading' to track if a search is in progress, and a function 'setIsLoading' to update it.
+// These lines set up state variables for the search query, results, error message, and loading status.
 
 // const handleSearch = async (e) => { ... }
 // This function is called when the search form is submitted.
 
 // e.preventDefault();
-// This prevents the default form submission behavior, which would refresh the page. This line was specifically requested to be included.
+// This prevents the default form submission behavior, which would refresh the page.
 
 // setError(null); setResults(null); setIsLoading(true);
 // These lines reset the error and results states, and set isLoading to true before starting the search.
@@ -87,13 +81,17 @@ export default Search;
 // setResults(userData);
 // If the fetch is successful, this sets the results state with the user data.
 
-// catch (err) { setError("Looks like we can't find the user"); }
-// If an error occurs during the fetch, this sets the error state with a message.
+// catch (err) { setError("Looks like we cant find the user"); }
+// If an error occurs during the fetch, this sets the error state with the specific message.
+// This is the line that has been modified to include the requested error message.
 
 // finally { setIsLoading(false); }
 // This sets isLoading back to false, whether the fetch was successful or not.
 
 // The return statement renders the search form, loading indicator, error message (if any), and search results (if any).
+
+// {error && <p className="error">{error}</p>}
+// This line displays the error message if there is one, which will now be "Looks like we cant find the user" when a user is not found.
 
 // export default Search;
 // This exports the Search component so it can be used in other parts of the application.
